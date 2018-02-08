@@ -22,6 +22,15 @@ var indexLoading = fs.readFile('./public/loading.html', function (err, html) {
 //make indexloading which is in public folder. Same method as index 
 
 // require more modules/folders here!
+archive.addUrlToList('wimby.com', function (body) {
+  console.log(body);
+});
+archive.addUrlToList('kevinlamfanclub.com', function (body) {
+  console.log(body);
+});
+archive.isUrlInList('wimby.com', function (isTrue) { 
+  console.log(isTrue);
+});
 
 exports.handleRequest = function (req, res) {
   var requestBody = '';
@@ -30,13 +39,13 @@ exports.handleRequest = function (req, res) {
   console.log('dirname', __dirname);
   converse.results = [];
   if (req.method === 'GET' && req.url === '/') {
-    // console.log('get got');
-    // res.writeHead(statusCode, header);
+    console.log('get got');
+    res.writeHead(statusCode, header);
     
-    // res.end(index);
-    // // res.end(archive.paths.list);
+    res.end(index);
+    // res.end(archive.paths.list);
   } else if (req.method === 'POST') {
-    console.log(req.method);
+    
     req.on('data', (data) => {
       requestBody += data;
     });

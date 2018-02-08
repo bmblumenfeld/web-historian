@@ -12,7 +12,7 @@ var _ = require('underscore');
 exports.paths = {
   siteAssets: path.join(__dirname, '../web/public'),
   archivedSites: path.join(__dirname, '../archives/sites'),
-  list: path.join(__dirname, '../archives/sites.txt')
+  list: path.join(__dirname, '../web/archives/sites.txt')
 };
 
 // Used for stubbing paths for tests, do not modify
@@ -25,13 +25,51 @@ exports.initialize = function(pathsObj) {
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
+
 exports.readListOfUrls = function(callback) {
+  var body = [];
+  fs.readFile(exports.paths.list, 'utf8', function (err, data) {
+    if (err) {
+      throw err;
+    } 
+    var list = data.split('\n');
+    list.forEach(function (element){
+      body.push(element);
+    });
+    callback(body);
+  });
 };
 
 exports.isUrlInList = function(url, callback) {
+  var result = false;
+  exports.readListOfUrls(function (urls) {
+    if (urls.includes(url)) {
+      result = true;
+    }
+    callback(result);
+  });
 };
 
 exports.addUrlToList = function(url, callback) {
+  // var textBody = '';
+  // exports.readListOfUrls(function (urls) {
+  //   urls.forEach(function (element) {
+  //     textBody += (element + '\n');
+  //   });
+  // });
+  fs.appendFile(exports.paths.list, url + '\n', (err) => {
+    if (err) {
+      throw err;
+    } 
+    callback(url);
+  });
+  // var writeStream = fs.createWriteStream(exports.paths.list, { flags : 'w' });
+  // var readStream = new MyReadStream();
+  // readStream.pipe(writeStream);
+  // writeStream.on('close', function () {
+  //   console.log('All done!');
+  // });
+
 };
 
 exports.isUrlArchived = function(url, callback) {
