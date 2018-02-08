@@ -14,18 +14,19 @@ exports.serveAssets = function(res, asset, callback) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...),
   // css, or anything that doesn't change often.)
+  //start here
   fs.readFile('./public/index.html', function (err, html) {
-  if (err) {
-    throw err;
-  } 
-  index += html;
-});
-var indexLoading = fs.readFile('./public/loading.html', function (err, html) {
-  if (err) {
-    throw err;
-  } 
-  loadIndex += html;
-});
+    if (err) {
+      throw err;
+    } 
+    index += html;
+  });
+  fs.readFile('./public/loading.html', function (err, html) {
+    if (err) {
+      throw err;
+    } 
+    loadIndex += html;
+  });
 };
 
 

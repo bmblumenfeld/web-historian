@@ -18,13 +18,13 @@ var indexLoading = fs.readFile('./public/loading.html', function (err, html) {
   } 
   loadIndex += html;
 });
-var requestBody = ''
+
 //make indexloading which is in public folder. Same method as index 
 
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
-  var requestBody = ''
+  var requestBody = '';
   var statusCode = 200;
   var converse = {};
   console.log('dirname', __dirname);
@@ -44,7 +44,7 @@ exports.handleRequest = function (req, res) {
       console.log(requestBody);
       res.writeHead(201, header);
   
-    res.end(loadIndex);
+      res.end(loadIndex);
     });
     
   }
