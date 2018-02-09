@@ -1,6 +1,9 @@
 var fs = require('fs');
+var http = require('http')
 var path = require('path');
 var _ = require('underscore');
+var $ = require('jquery');
+console.log($);
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -33,7 +36,7 @@ exports.readListOfUrls = function(callback) {
       throw err;
     } 
     var list = data.split('\n');
-    list.forEach(function (element){
+    list.forEach(function (element) {
       body.push(element);
     });
     callback(body);
@@ -73,7 +76,29 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
+  fs.access(`${exports.paths.archivedSites}/${url}`, function (err) {
+    var arched = true;
+    if (err) {
+      arched = false;
+      // throw err;
+    } 
+    callback(arched);
+  });
 };
 
 exports.downloadUrls = function(urls) {
+  urls.forEach(function (url) {
+    http.request
+      .get(`http://${url}`)
+      .send({ url: url })
+      .expect(302, function (err) {
+        if (!err) {
+          var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
+          expect(fileContents).to.equal(url + '\n');
+        }
+        done(err);
+      });
+
+  });
+
 };

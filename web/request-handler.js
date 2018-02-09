@@ -22,15 +22,7 @@ var indexLoading = fs.readFile('./public/loading.html', function (err, html) {
 //make indexloading which is in public folder. Same method as index 
 
 // require more modules/folders here!
-archive.addUrlToList('wimby.com', function (body) {
-  console.log(body);
-});
-archive.addUrlToList('kevinlamfanclub.com', function (body) {
-  console.log(body);
-});
-archive.isUrlInList('wimby.com', function (isTrue) { 
-  console.log(isTrue);
-});
+archive.downloadUrls(['google.com']);
 
 exports.handleRequest = function (req, res) {
   var requestBody = '';
@@ -38,11 +30,17 @@ exports.handleRequest = function (req, res) {
   var converse = {};
   console.log('dirname', __dirname);
   converse.results = [];
-  if (req.method === 'GET' && req.url === '/') {
+  if ((req.method === 'GET') && (req.url === '/')) {
     console.log('get got');
     res.writeHead(statusCode, header);
     
     res.end(index);
+    // res.end(archive.paths.list);
+  } if ((req.method === 'GET') && (req.url === '/styles.css')) {
+    console.log('get got');
+    res.writeHead(statusCode, header);
+    
+    res.end();
     // res.end(archive.paths.list);
   } else if (req.method === 'POST') {
     
